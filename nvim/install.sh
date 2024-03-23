@@ -13,6 +13,6 @@ echo "Moving nvim into /usr/local/bin/nvim"
 sudo mv nvim.appimage /usr/local/bin/nvim
 
 echo "Copying nvim folder into ~/.config/"
-mkdir -p ~/.config/nvim && cp -r nvim/* ~/.config/nvim/
+mkdir -p ~/.config/nvim && cp -r config/* ~/.config/nvim/
 
 echo "Setup complete, start hacking!"
