@@ -72,6 +72,10 @@ copy_files ()
     case "$backup" in
       y|Y) backup_folder
       ;;
+      n|N) rm -rf ~/.config/nvim
+      ;;
+      *) rm -rf ~/.config/nvim
+      ;;
     esac
   fi
 
