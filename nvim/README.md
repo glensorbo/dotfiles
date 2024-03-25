@@ -154,3 +154,38 @@ vim.keymap.set("n", "<C-n>", ":Neotree <CR>", {})
 ```lua
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 ```
+
+#### Vim stuff I need to know
+
+operator - is what to do, such as  d  for delete
+[number] - is an optional count to repeat the motion
+motion   - moves over the text to operate on, such as  w (word)
+
+A short list of motions:
+    w - until the start of the next word, EXCLUDING its first character.
+    e - to the end of the current word, INCLUDING the last character.
+    $ - to the end of the line, INCLUDING the last character.
+    0 - start of line
+    % - matching pair. I.e "(" matching ")"
+
+- operators
+  - d = delete
+  - p = put
+  - u = undo
+  - r = replace
+  - c = change
+
+- searching
+  - ESC + / + word = forward search
+  - ESC + ? + word = backword search
+
+To search the same phrase again type `n`
+To search the same phrase in oposite direction type `N`
+
+- substitute command
+
+To substitute new for the first old in a line type    :s/old/new
+To substitute new for all 'old's on a line type       :s/old/new/g
+To substitute phrases between two line #'s type       :#,#s/old/new/g
+To substitute all occurrences in the file type        :%s/old/new/g
+To ask for confirmation each time add 'c'             :%s/old/new/gc
