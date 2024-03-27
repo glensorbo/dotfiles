@@ -19,7 +19,7 @@ main ()
   fi
 
   echo "Installing dependencies"
-  sudo apt update && sudo apt install curl gcc fuse3 unzip
+  sudo apt update && sudo apt install curl gcc fuse3 unzip 
 
   installedVersion=$(nvim -v | awk '/NVIM/ {print substr($2, 2)}')
 
