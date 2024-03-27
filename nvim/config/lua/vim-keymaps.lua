@@ -1,4 +1,11 @@
-vim.g.mapleader = " "
-
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+vim.keymap.set("n", "<C-s>", ":w<CR>")
+
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to [P]revious [D]iagnostic message" })
+vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to [N]ext [D]iagnostic message" })
+vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show [D]iagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickfix list" })
