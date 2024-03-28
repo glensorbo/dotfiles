@@ -16,11 +16,6 @@ vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
 
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
-
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
@@ -33,8 +28,30 @@ vim.opt.mouse = "a"
 
 vim.opt.showmode = false
 
--- "merges" nvim and os clipboard
 vim.opt.clipboard = "unnamedplus"
+
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+vim.opt.signcolumn = "yes"
+
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+vim.opt.inccommand = "split"
+
+vim.opt.cursorline = true
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+        desc = "Highlight when yanking (copying) text",
+        group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+        callback = function()
+                vim.highlight.on_yank()
+        end,
+})
 ```
 
 ## Keymaps
@@ -43,11 +60,28 @@ vim.opt.clipboard = "unnamedplus"
 
 ```lua
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
--- This makes it possible to move lines of code up or down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+vim.keymap.set("n", "<C-s>", ":w<CR>")
+
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to [P]revious [D]iagnostic message" })
+vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to [N]ext [D]iagnostic message" })
+vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show [D]iagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickfix list" })
 ```
+
+### Comments
+
+'gc' will activate the comment plugin. After choose how much you need to comment out
+
+Keywords like "TODO:" and "NOTE:" etc is highlighted.
+
+![Todo](https://user-images.githubusercontent.com/292349/118135272-ad21e980-b3b7-11eb-881c-e45a4a3d6192.png)
 
 ### Telescope
 
@@ -157,18 +191,19 @@ vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
 #### Vim stuff I need to know
 
-operator - is what to do, such as  d  for delete
+operator - is what to do, such as d for delete
 [number] - is an optional count to repeat the motion
-motion   - moves over the text to operate on, such as  w (word)
+motion - moves over the text to operate on, such as w (word)
 
 A short list of motions:
-    w - until the start of the next word, EXCLUDING its first character.
-    e - to the end of the current word, INCLUDING the last character.
-    $ - to the end of the line, INCLUDING the last character.
-    0 - start of line
-    % - matching pair. I.e "(" matching ")"
+w - until the start of the next word, EXCLUDING its first character.
+e - to the end of the current word, INCLUDING the last character.
+$ - to the end of the line, INCLUDING the last character.
+0 - start of line
+% - matching pair. I.e "(" matching ")"
 
 - operators
+
   - d = delete
   - p = put
   - u = undo
@@ -184,8 +219,8 @@ To search the same phrase in oposite direction type `N`
 
 - substitute command
 
-To substitute new for the first old in a line type    :s/old/new
-To substitute new for all 'old's on a line type       :s/old/new/g
-To substitute phrases between two line #'s type       :#,#s/old/new/g
-To substitute all occurrences in the file type        :%s/old/new/g
-To ask for confirmation each time add 'c'             :%s/old/new/gc
+To substitute new for the first old in a line type :s/old/new
+To substitute new for all 'old's on a line type :s/old/new/g
+To substitute phrases between two line #'s type :#,#s/old/new/g
+To substitute all occurrences in the file type :%s/old/new/g
+To ask for confirmation each time add 'c' :%s/old/new/gc
