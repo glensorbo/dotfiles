@@ -18,6 +18,7 @@ return {
 			css = { { "prettierd", "prettier" } },
 			html = { { "prettierd", "prettier" } },
 			markdown = { { "prettierd", "prettier" } },
+			charp = { { "charpier" } },
 		},
 	},
 }
