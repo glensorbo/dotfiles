@@ -20,6 +20,10 @@ return {
 			vim.keymap.set("n", "<leader>sn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "[S]earch [N]eovim files" })
+
+			vim.keymap.set("n", "<leader>on", function()
+				builtin.find_files({ cwd = "~/notes" })
+			end, { desc = "[O]pen [N]ote files" })
 		end,
 	},
 	{

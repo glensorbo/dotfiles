@@ -14,6 +14,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.g.python3_host_prog = "/usr/bin/python3"
+
 require("vim-keymaps")
 require("vim-options")
 require("lazy").setup("plugins")
