@@ -5,20 +5,20 @@ return {
 		format_on_save = function(bufnr)
 			local disable_filetypes = { c = true, cpp = true }
 			return {
-				timeout_ms = 500,
+				timeout_ms = 2500,
 				lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
 			}
 		end,
 		formatters_by_ft = {
 			lua = { "stylua" },
-			javascript = { "prettierd", "prettier" },
-			typescript = { "prettierd", "prettier" },
-			typescriptreact = { { "prettierd", "prettier" } },
-			yaml = { { "prettierd", "prettier" } },
-			css = { { "prettierd", "prettier" } },
-			html = { { "prettierd", "prettier" } },
-			markdown = { { "prettierd", "prettier" } },
-			charp = { { "charpier" } },
+			javascript = { "prettier" },
+			typescript = { "prettier" },
+			typescriptreact = { "prettier" },
+			yaml = { "prettier" },
+			css = { "prettier" },
+			html = { "prettier" },
+			markdown = { "prettier" },
+			csharp = { { "csharpier" } },
 		},
 	},
 }
