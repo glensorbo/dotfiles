@@ -15,6 +15,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.python3_host_prog = "/usr/bin/python3"
+vim.g.rg_gitignore = 1
 
 require("vim-keymaps")
 require("vim-options")

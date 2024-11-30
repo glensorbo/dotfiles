@@ -2,6 +2,7 @@ vim.keymap.set("v", "<C-Up>", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 vim.keymap.set("v", "<C-Down>", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<leader>ct", ":ColorToggle<CR>", { desc = "[C]olor[T]oggle" })
 
 vim.keymap.set("i", "jj", "<Esc>")
 vim.keymap.set("n", "<C-s>", ":%s/")
