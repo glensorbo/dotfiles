@@ -137,13 +137,6 @@ alias dr="dotnet run"
 alias src="source ~/.zshrc"
 
 alias wise="cd ~/Work/wise/"
-alias wise-f="cd ~/Work/wise/frontend"
-alias wise-fc="cd ~/Work/wise/frontend && yarn tscheck && yarn prettierCheck && yarn lint && yarn test run && ! grep --recursive \"from '@mui/icons-material'\" src"
-alias wise-fr="cd ~/Work/wise/frontend && yarn start"
-alias wise-b="cd ~/Work/wise/backend/WISE"
-alias wise-bc="cd ~/Work/wise/backend && dotnet build  --warnaserror --no-incremental && dotnet format --verbosity diagnostic && dotnet test"
-alias wise-br="cd ~/Work/wise/backend/WISE && dotnet run"
-alias wise-be="cd ~/Work/wise/docker && docker compose up sqldata backend"
 
 alias notes="cd ~/notes && nvim"
 
@@ -153,7 +146,6 @@ alias kc="kubectl"
 
 export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
-
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
