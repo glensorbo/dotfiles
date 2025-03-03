@@ -14,4 +14,5 @@ tags:
 2. :cfdo %s/-search term-/-replace term-/gc
 3. :cfdo update
 
-Ggrep (grep only git files) will find all places where -search term- is, cfdo will replace them and cfdo update will save all files
+Ggrep (grep only git files) will find all places where -search term- is,
+cfdo will replace them and cfdo update will save all files
