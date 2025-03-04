@@ -9,6 +9,15 @@ tags:
 
 # Kubernetes
 
+<!--toc:start-->
+
+- [Kubernetes](#kubernetes)
+  - [To get pods](#to-get-pods)
+  - [To get services](#to-get-services)
+  - [To get events / logs / warnings](#to-get-events-logs-warnings)
+  - [To get persistence volumes](#to-get-persistence-volumes)
+  <!--toc:end-->
+
 ## To get pods
 
 ```bash
@@ -41,4 +50,16 @@ nginx-service   ClusterIP   10.0.198.13   <none>        8080/TCP   20h
 
 ```bash
 kubectl events --types=Warning
+```
+
+## To get persistence volumes
+
+```bash
+kubectl get pvc
+```
+
+```shell
+NAME        STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS                 VOLUMEATTRIBUTESCLASS   AGE
+matomo      Bound    pvc-<id>   1Gi        RWO            managed-csi-premium-retain   <unset>                 2d18h
+matomo-db   Bound    pvc-<id>   5Gi        RWO            managed-csi-premium-retain   <unset>                 2d18h
 ```
