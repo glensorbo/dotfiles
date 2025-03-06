@@ -131,6 +131,7 @@ alias dps="docker ps -a"
 alias dcd="docker compose down"
 alias dcu="docker compose up"
 alias dcud="docker compose up -d"
+alias dcl="docker compose logs"
 
 alias dr="dotnet run"
 
