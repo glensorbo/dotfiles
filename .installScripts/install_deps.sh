@@ -3,7 +3,8 @@
 sudo apt install \
   stow \
   git \
-  fzf \
   fd-find \
   ripgrep \
+  conky-all \
+  xsel \
   -y
