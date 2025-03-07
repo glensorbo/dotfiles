@@ -118,9 +118,10 @@ alias vi=nvim
 alias nv=nvim
 alias vim=nvim
 
+alias t=tmux
 alias twise="tmux attach -t wise"
 alias tapp="tmux attach -t Wise-App"
-alias t=tmux
+alias tdot="tmux a -t dotfiles"
 
 alias bat=batcat
 alias lg="lazygit"
@@ -137,9 +138,9 @@ alias dr="dotnet run"
 
 alias src="source ~/.zshrc"
 
-alias wise="cd ~/Work/wise/"
-
+alias wise="cd ~/code/work/wise/"
 alias notes="cd ~/notes && nvim"
+alias dotfiles="cd ~/dotfiles"
 
 alias conf="nv ~/.zshrc"
 
