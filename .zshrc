@@ -120,7 +120,7 @@ alias vim=nvim
 
 alias t=tmux
 alias twise="tmux attach -t wise"
-alias tapp="tmux attach -t Wise-App"
+alias tapp="tmux attach -t wise-app"
 alias tdot="tmux a -t dotfiles"
 
 alias bat=batcat
