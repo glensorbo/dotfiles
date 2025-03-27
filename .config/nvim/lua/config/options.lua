@@ -42,6 +42,8 @@ vim.opt.conceallevel = 1
 
 vim.g.snacks_animate = false
 
+vim.g.lazyvim_eslint_auto_format = false
+
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
   group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
