@@ -20,8 +20,7 @@
     "lazyvim.plugins.extras.ui.alpha",
     "lazyvim.plugins.extras.util.dot",
     "lazyvim.plugins.extras.util.mini-hipatterns",
-    "lazyvim.plugins.extras.util.project",
-    "lazyvim.plugins.extras.util.rest"
+    "lazyvim.plugins.extras.util.project"
   ],
   "install_version": 8,
   "news": {

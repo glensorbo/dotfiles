@@ -13,7 +13,9 @@ vim.keymap.set("n", "<leader>ct", ":ColorToggle<CR>", { desc = "[C]olor[T]oggle"
 vim.keymap.set("i", "jj", "<Esc>")
 vim.keymap.set("n", "<C-s>", ":%s/")
 
+vim.keymap.set("n", "<leader>a", "v/\\u<CR>h", { desc = "Highlight to next capital letter" })
+
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Go to [P]revious [D]iagnostic message" })
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Go to [N]ext [D]iagnostic message" })
 vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show [D]iagnostic [E]rror messages" })
-vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickFix list" })
