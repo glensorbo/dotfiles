@@ -145,6 +145,7 @@ alias dotfiles="cd ~/dotfiles"
 alias conf="nv ~/.zshrc"
 
 alias kc="kubectl"
+alias ks="k9s"
 
 export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
