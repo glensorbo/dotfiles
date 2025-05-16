@@ -130,8 +130,8 @@ alias cls="clear"
 
 alias dps="docker ps -a"
 alias dcd="docker compose down"
-alias dcu="docker compose up"
-alias dcud="docker compose up -d"
+alias dcu="COMPOSE_BAKE=true docker compose up"
+alias dcud="COMPOSE_BAKE=true docker compose up -d"
 alias dcl="docker compose logs"
 
 alias dr="dotnet run"
