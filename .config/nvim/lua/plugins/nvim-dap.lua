@@ -39,6 +39,11 @@ return {
       require("mason-nvim-dap").setup(LazyVim.opts("mason-nvim-dap.nvim"))
     end
 
+    local dap = require("dap")
+    local dotnet = require("easy-dotnet")
+    local dapui = require("dapui")
+    dap.set_log_level("TRACE")
+
     vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
     for name, sign in pairs(LazyVim.config.icons.dap) do
@@ -49,11 +54,99 @@ return {
       )
     end
 
-    -- setup dap config by VsCode launch.json file
-    local vscode = require("dap.ext.vscode")
-    local json = require("plenary.json")
-    vscode.json_decode = function(str)
-      return vim.json.decode(json.json_strip_comments(str))
+    dap.listeners.before.attach.dapui_config = function()
+      dapui.open()
     end
+    dap.listeners.before.launch.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.event_terminated.dapui_config = function()
+      dapui.close()
+    end
+    dap.listeners.before.event_exited.dapui_config = function()
+      dapui.close()
+    end
+
+    dap.adapters.coreclr = {
+      type = "executable",
+      command = "netcoredbg",
+      args = { "--interpreter=vscode" },
+    }
+
+    dap.configurations.cs = {
+      {
+        type = "coreclr",
+        name = "launch - netcoredbg",
+        request = "launch",
+        program = function()
+          return vim.fn.input("path to dll", vim.fn.getcwd() .. "/WISE/bin/Debug/net9.0/WISE.dll", "file")
+        end,
+      },
+      {
+        type = "coreclr",
+        name = "attach - netcoredbg",
+        request = "attach",
+        processId = require("dap.utils").pick_process,
+      },
+    }
+
+    local function file_exists(path)
+      local stat = vim.loop.fs_stat(path)
+      return stat and stat.type == "file"
+    end
+
+    local debug_dll = nil
+
+    local function ensure_dll()
+      if debug_dll ~= nil then
+        return debug_dll
+      end
+      local dll = dotnet.get_debug_dll()
+      debug_dll = dll
+      return dll
+    end
+
+    for _, value in ipairs({ "cs", "fsharp" }) do
+      dap.configurations[value] = {
+        {
+          type = "coreclr",
+          name = "Program",
+          request = "launch",
+          env = function()
+            local dll = ensure_dll()
+            local vars = dotnet.get_environment_variables(dll.project_name, dll.absolute_project_path)
+            return vars or nil
+          end,
+          program = function()
+            local dll = ensure_dll()
+            if not file_exists(dll.target_path) then
+              error("Project has not been built, path: " .. dll.target_path)
+            end
+            return dll.target_path
+          end,
+          cwd = function()
+            local dll = ensure_dll()
+            return dll.absolute_project_path
+          end,
+        },
+      }
+
+      dap.listeners.before["event_terminated"]["easy-dotnet"] = function()
+        debug_dll = nil
+      end
+
+      dap.adapters.coreclr = {
+        type = "executable",
+        command = "netcoredbg",
+        args = { "--interpreter=vscode" },
+      }
+    end
+
+    -- setup dap config by VsCode launch.json file
+    -- local vscode = require("dap.ext.vscode")
+    -- local json = require("plenary.json")
+    -- vscode.json_decode = function(str)
+    --   return vim.json.decode(json.json_strip_comments(str))
+    -- end
   end,
 }

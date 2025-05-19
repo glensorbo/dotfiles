@@ -13,3 +13,12 @@ vim.keymap.set("i", "jj", "<Esc>")
 vim.keymap.set("n", "<C-s>", ":%s/")
 
 vim.keymap.set("n", "<leader>a", "v/\\u<CR>h", { desc = "Highlight to next capital letter" })
+
+vim.keymap.set("n", "<leader>dp", function()
+  vim.diagnostic.jump({ count = -1, float = true })
+end, { desc = "Go to [P]revious [D]iagnostic message" })
+vim.keymap.set("n", "<leader>dn", function()
+  vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Go to [N]ext [D]iagnostic message" })
+vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show [D]iagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickFix list" })
