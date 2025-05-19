@@ -112,6 +112,9 @@ export EDITOR='nvim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+alias xclip="xclip -sel clip"
+
 alias lla="ll -a"
 
 alias vi=nvim
