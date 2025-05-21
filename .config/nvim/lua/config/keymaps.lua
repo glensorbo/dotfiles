@@ -22,3 +22,7 @@ vim.keymap.set("n", "<leader>dn", function()
 end, { desc = "Go to [N]ext [D]iagnostic message" })
 vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show [D]iagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickFix list" })
+
+vim.keymap.set("n", "<leader>Re", function()
+  require("kulala").set_selected_env()
+end, { desc = "Set enviroment" })

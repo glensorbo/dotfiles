@@ -166,4 +166,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:$HOME/.netcoredbg"
 
+# Go
+export GOPATH=$HOME/.go
+export PATH=$GOPATH/bin:$PATH
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
