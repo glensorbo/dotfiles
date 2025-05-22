@@ -156,12 +156,17 @@ export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# bun completions
-[ -s "/home/glen.sorbo/.bun/_bun" ] && source "/home/glen.sorbo/.bun/_bun"
+DISABLE_AUTO_TITLE="true"
+function set-title() {
+  echo -en "\e]2;$@\a"
+}
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:$HOME/.netcoredbg"
