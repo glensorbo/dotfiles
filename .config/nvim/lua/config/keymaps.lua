@@ -26,3 +26,5 @@ vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]i
 vim.keymap.set("n", "<leader>Re", function()
   require("kulala").set_selected_env()
 end, { desc = "Set enviroment" })
+
+require("mssql").set_keymaps("<leader>m")
