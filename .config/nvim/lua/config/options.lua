@@ -18,6 +18,11 @@ vim.lsp.config("roslyn", {
   settings = {
     ["csharp|background_analysis"] = {
       dotnet_compiler_diagnostics_scope = "fullSolution",
+      dotnet_analyzer_diagnostics_scope = "fullSolution",
+    },
+    ["csharp|code_lens"] = {
+      dotnet_enable_references_code_lens = true,
+      dotnet_enable_tests_code_lens = true,
     },
     ["csharp|inlay_hints"] = {
       csharp_enable_inlay_hints_for_implicit_object_creation = true,
@@ -33,8 +38,15 @@ vim.lsp.config("roslyn", {
       dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
       dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
     },
-    ["csharp|code_lens"] = {
-      dotnet_enable_references_code_lens = true,
+    ["csharp|completion"] = {
+      dotnet_show_completion_items_from_unimported_namespaces = true,
+    },
+    ["csharp|formatting"] = {
+      dotnet_enable_formatting = true,
+      dotnet_format_on_type = true,
+      dotnet_format_on_save = true,
+      dotnet_format_on_save_timeout_ms = 1000,
+      dotnet_format_on_save_require_confirmation = false,
     },
   },
 })
