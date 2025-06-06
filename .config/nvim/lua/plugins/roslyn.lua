@@ -5,5 +5,6 @@ return {
   ---@type RoslynNvimConfig
   opts = {
     filewatching = "roslyn",
+    lock_target = true,
   },
 }
