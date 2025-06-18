@@ -152,6 +152,7 @@ alias ks="k9s"
 
 export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+export DOTNET_USE_POLLING_FILE_WATCHER=1
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -174,5 +175,8 @@ export PATH="$PATH:$HOME/.netcoredbg"
 # Go
 export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$PATH
+
+# sqlcmd
+export PATH="$PATH:/opt/mssql-tools18/bin"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

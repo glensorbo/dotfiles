@@ -16,6 +16,8 @@ map("n", "<C-s>", ":%s/")
 
 map("n", "<leader>a", "v/\\u<CR>h", { desc = "Highlight to next capital letter" })
 
+map("n", "<leader>,", "<cmd>s/, \\?/,\\r/g<cr><cmd>nohlsearch<cr>", { desc = "Split line by comma" })
+
 map("n", "<leader>dp", function()
   vim.diagnostic.jump({ count = -1, float = true })
 end, { desc = "Go to [P]revious [D]iagnostic message" })
