@@ -169,7 +169,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+# export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export PATH="$PATH:$HOME/.netcoredbg"
 
 # Go
@@ -178,5 +178,8 @@ export PATH=$GOPATH/bin:$PATH
 
 # sqlcmd
 export PATH="$PATH:/opt/mssql-tools18/bin"
+
+# Matomo docker
+alias matomo="docker compose -f compose.matomo.yaml"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
