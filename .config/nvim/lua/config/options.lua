@@ -33,6 +33,7 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 
 vim.opt.spelllang = "en_gb"
+vim.opt.spelloptions = "camel"
 vim.opt.spell = true
 
 vim.g.snacks_animate = false
