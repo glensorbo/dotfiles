@@ -50,3 +50,5 @@ vim.keymap.set("n", "<leader>cR", function()
 end, { desc = "Rename File" })
 
 vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename" })
+
+vim.keymap.set("n", "<leader>cp", ":CopilotChatToggle<cr>", { desc = "Open Copilot Chat" })
