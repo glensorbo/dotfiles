@@ -57,6 +57,12 @@ return {
 				lsp_format = "fallback",
 				stop_after_first = true,
 			},
+			markdown = {
+				"prettierd",
+				"prettier",
+				lsp_format = "fallback",
+				stop_after_first = true,
+			},
 		},
 	},
 }

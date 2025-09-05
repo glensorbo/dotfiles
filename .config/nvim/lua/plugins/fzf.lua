@@ -11,7 +11,7 @@ return {
 			desc = "Find Files in project directory",
 		},
 		{
-			"<leader>fg",
+			"<leader>fl",
 			function()
 				require("fzf-lua").live_grep()
 			end,
@@ -66,20 +66,20 @@ return {
 			end,
 			desc = "[F]ind [D]iagnostics",
 		},
-		{
-			"<leader>fr",
-			function()
-				require("fzf-lua").resume()
-			end,
-			desc = "[F]ind [R]esume",
-		},
-		{
-			"<leader>fo",
-			function()
-				require("fzf-lua").oldfiles()
-			end,
-			desc = "[F]ind [O]ld Files",
-		},
+		-- {
+		-- 	"<leader>fr",
+		-- 	function()
+		-- 		require("fzf-lua").resume()
+		-- 	end,
+		-- 	desc = "[F]ind [R]esume",
+		-- },
+		-- {
+		-- 	"<leader>fo",
+		-- 	function()
+		-- 		require("fzf-lua").oldfiles()
+		-- 	end,
+		-- 	desc = "[F]ind [O]ld Files",
+		-- },
 		-- {
 		-- 	"<leader><leader>",
 		-- 	function()
@@ -87,12 +87,12 @@ return {
 		-- 	end,
 		-- 	desc = "[,] Find existing buffers",
 		-- },
-		{
-			"<leader>/",
-			function()
-				require("fzf-lua").lgrep_curbuf()
-			end,
-			desc = "[/] Live grep the current buffer",
-		},
+		-- {
+		-- 	"<leader>/",
+		-- 	function()
+		-- 		require("fzf-lua").lgrep_curbuf()
+		-- 	end,
+		-- 	desc = "[/] Live grep the current buffer",
+		-- },
 	},
 }
