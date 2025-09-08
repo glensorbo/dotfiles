@@ -8,7 +8,7 @@ return {
 		bigfile = { enabled = true },
 		dashboard = { enabled = false },
 		explorer = { enabled = true },
-		indent = { enabled = true },
+		indent = { enabled = false },
 		input = { enabled = true },
 		notifier = {
 			enabled = true,
@@ -16,8 +16,8 @@ return {
 		},
 		picker = { enabled = true },
 		quickfile = { enabled = true },
-		scope = { enabled = true },
-		scroll = { enabled = true },
+		scope = { enabled = false },
+		scroll = { enabled = false },
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
 		styles = {
