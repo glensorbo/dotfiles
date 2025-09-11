@@ -1,5 +1,7 @@
 conky.config = {
-    alignment = 'top_right',
+    -- alignment = 'top',
+    gap_x = -2840,
+    gap_y = 420,
     xinerama_head = 1,
     background = true,
     border_width = 1,
@@ -15,8 +17,6 @@ conky.config = {
     draw_shades = false,
     extra_newline = false,
     font = 'DejaVu Sans Mono:size=12',
-    gap_x = 10,
-    gap_y = 10,
     minimum_height = 7,
     minimum_width = 6,
     net_avg_samples = 2,

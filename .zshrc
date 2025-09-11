@@ -12,6 +12,7 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/.scripts
+export PATH=$PATH:$HOME/.local/bin
 
 bindkey -v
 
