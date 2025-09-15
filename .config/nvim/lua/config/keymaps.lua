@@ -14,6 +14,8 @@ vim.keymap.set("n", "<leader>dp", function()
 	vim.diagnostic.jump({ count = -1, float = true })
 end, { desc = "Go to [P]revious [D]iagnostic message" })
 
+vim.keymap.set("n", "<leader>co", "<cmd>LspTypescriptSourceAction<cr>", { desc = "LSP typescript source action" })
+
 vim.keymap.set("n", "<leader>dn", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = "Go to [N]ext [D]iagnostic message" })
