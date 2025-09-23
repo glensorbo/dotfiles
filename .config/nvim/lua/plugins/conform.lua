@@ -23,24 +23,28 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			javascript = {
+				"oxlint",
 				"prettierd",
 				"prettier",
 				lsp_format = "fallback",
 				stop_after_first = true,
 			},
 			typescript = {
+				"oxlint",
 				"prettierd",
 				"prettier",
 				lsp_format = "fallback",
 				stop_after_first = true,
 			},
 			typescriptreact = {
+				"oxlint",
 				"prettierd",
 				"prettier",
 				lsp_format = "fallback",
 				stop_after_first = true,
 			},
 			json = {
+				"oxlint",
 				"prettierd",
 				"prettier",
 				lsp_format = "fallback",
