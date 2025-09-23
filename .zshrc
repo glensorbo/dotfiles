@@ -12,6 +12,7 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/.scripts
+export PATH=$PATH:$HOME/.local/bin
 
 bindkey -v
 
@@ -112,6 +113,9 @@ export EDITOR='nvim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+alias xclip="xclip -sel clip"
+
 alias lla="ll -a"
 
 alias vi=nvim
@@ -149,17 +153,34 @@ alias ks="k9s"
 
 export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+export DOTNET_USE_POLLING_FILE_WATCHER=1
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# bun completions
-[ -s "/home/glen.sorbo/.bun/_bun" ] && source "/home/glen.sorbo/.bun/_bun"
+DISABLE_AUTO_TITLE="true"
+function set-title() {
+  echo -en "\e]2;$@\a"
+}
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$PATH:$HOME/.netcoredbg"
+
+# Go
+export GOPATH=$HOME/.go
+export PATH=$GOPATH/bin:$PATH
+
+# sqlcmd
+export PATH="$PATH:/opt/mssql-tools18/bin"
+
+# Matomo docker
+alias matomo="docker compose -f compose.matomo.yaml"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
