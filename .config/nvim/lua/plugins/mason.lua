@@ -17,14 +17,11 @@ return {
 	opts = {
 		automatic_enable = true,
 		ensure_installed = {
-			"roslyn",
 			"ts_ls",
 			"lua_ls",
 			"oxlint",
-			"prettier",
 			"stylua",
 			"marksman",
-			"markdownlint",
 		},
 	},
 }
