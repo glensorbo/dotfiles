@@ -17,7 +17,7 @@ return {
 	},
 	opts = {
 		format_on_save = {
-			timeout_ms = 750,
+			timeout_ms = 1000,
 			lsp_format = "fallback",
 		},
 		formatters_by_ft = {
