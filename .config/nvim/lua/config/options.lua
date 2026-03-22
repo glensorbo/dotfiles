@@ -1,7 +1,7 @@
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
@@ -11,16 +11,16 @@ vim.opt.relativenumber = true
 vim.opt.scrolloff = 8
 vim.opt.smartindent = true
 
-vim.opt.mouse = "a"
+vim.opt.mouse = 'a'
 
 vim.opt.showmode = false
 
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = 'unnamedplus'
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = 'yes'
 
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 1000
@@ -28,12 +28,10 @@ vim.opt.timeoutlen = 1000
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.inccommand = "split"
+vim.opt.inccommand = 'split'
 
 vim.opt.cursorline = true
 
-vim.opt.spelllang = "en_gb"
-vim.opt.spelloptions = "camel"
+vim.opt.spelllang = 'en_gb'
+vim.opt.spelloptions = 'camel'
 vim.opt.spell = true
-
-vim.g.snacks_animate = false

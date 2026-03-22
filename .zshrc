@@ -184,3 +184,7 @@ export PATH="$PATH:/opt/mssql-tools18/bin"
 alias matomo="docker compose -f compose.matomo.yaml"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export ANTHROPIC_AUTH_TOKEN=ollama
+export ANTHROPIC_API_KEY=""
+export ANTHROPIC_BASE_URL=http://homelab.local.lan:11434
