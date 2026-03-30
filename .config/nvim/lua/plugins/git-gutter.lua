@@ -12,9 +12,9 @@ return {
 		-- vim.g.gitgutter_sign_modified_removed = "󰍶"
 
 		vim.g.gitgutter_sign_added = "┃"
-		vim.g.gitgutter_sign_modified = "┋"
+		vim.g.gitgutter_sign_modified = "┇"
 		vim.g.gitgutter_sign_removed = "━"
-		vim.g.gitgutter_sign_modified_removed = "┋"
+		vim.g.gitgutter_sign_modified_removed = "┇"
 	end,
 	config = function()
 		vim.api.nvim_set_hl(0, "GitGutterAdd", { fg = "#479829" }) -- , bg = "#003c00" })

@@ -4,15 +4,27 @@ return {
 	branch = "main",
 	lazy = false,
 	build = ":TSUpdate",
-	config = function()
+	opts = {
+		ensure_installed = {
+			"lua",
+			"markdown",
+			"markdown_inline",
+			"javascript",
+			"typescript",
+			"tsx",
+			"c_sharp",
+			"json",
+			"yaml",
+			"toml",
+			"http",
+		},
+	},
+	config = function(_, opts)
+		require("nvim-treesitter").setup(opts)
 		vim.filetype.add({
 			extension = {
-				["http"] = "http",
-			},
-		})
-		vim.filetype.add({
-			extension = {
-				["rest"] = "http",
+				http = "http",
+				rest = "http",
 			},
 		})
 	end,

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -e "~/.zshrc" ]; then
-	rm ~/.zshrc
+	mv ~/.zshrc ~/.zshrc.bak
 fi
 
 stow . -t ~/

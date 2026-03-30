@@ -5,6 +5,7 @@ return {
 			{ "nvim-lua/plenary.nvim", branch = "master" },
 		},
 		build = "make tiktoken",
+		event = "BufWinEnter",
 		opts = {
 			-- See Configuration section for options
 		},

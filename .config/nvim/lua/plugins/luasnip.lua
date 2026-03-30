@@ -10,7 +10,7 @@ return {
 		delete_check_events = "TextChanged",
 	},
 	config = function()
-		require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/nvim/snippets" } })
+		require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath("config") .. "/snippets" } })
 	end,
 	keys = function()
 		local ls = require("luasnip")
@@ -26,19 +26,7 @@ return {
 						vim.api.nvim_feedkeys(tabKey, "n", false)
 					end
 				end,
-				desc = "Jump to next snippet section",
-				mode = { "i" },
-			},
-			{
-				"<Tab>",
-				function()
-					if ls.expand_or_jumpable() then
-						ls.jump(1)
-					else
-						vim.api.nvim_feedkeys(tabKey, "n", false)
-					end
-				end,
-				desc = "Jump to next snippet section",
+				desc = "Expand or jump to next snippet section",
 				mode = { "i", "s" },
 			},
 			{

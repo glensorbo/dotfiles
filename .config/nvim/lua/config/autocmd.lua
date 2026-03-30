@@ -26,8 +26,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
 -- 	callback = function()
--- 		require("lint").try_lint()
+-- 		vim.lsp.enable("oxlint")
 -- 	end,
 -- })

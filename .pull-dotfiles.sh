@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd ~/dotfiles && git pull
+cd ~/code/personal/dotfiles && git pull

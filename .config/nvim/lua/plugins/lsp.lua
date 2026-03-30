@@ -25,7 +25,14 @@ return {
 		},
 		opts = {
 			filewatching = "off",
-			-- lock_target = true,
+			lock_target = true,
+			choose_target = function(target)
+				return vim.iter(target):find(function(item)
+					if string.match(item, "WISE.slnx") then
+						return item
+					end
+				end)
+			end,
 		},
 		config = function(_, opts)
 			require("roslyn").setup(opts)
