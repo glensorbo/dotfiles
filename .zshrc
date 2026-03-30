@@ -6,18 +6,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
+# Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/.scripts
-export PATH=$PATH:$HOME/.local/bin
-
-bindkey -v
 
 # Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
+# load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -37,7 +32,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -82,7 +77,7 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions vi-mode)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -94,93 +89,77 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
- 
-export EDITOR='nvim'
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
+
+export SUDO_EDITOR="$EDITOR"
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# export ARCHFLAGS="-arch $(uname -m)"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
 
-alias xclip="xclip -sel clip"
 
-alias lla="ll -a"
-
-alias vi=nvim
-alias nv=nvim
-alias vim=nvim
-
-alias t=tmux
-alias twise="tmux attach -t wise"
-alias tapp="tmux attach -t wise-app"
-alias tdot="tmux a -t dotfiles"
-
-alias bat=batcat
-alias lg="lazygit"
-alias ld="lazydocker"
-alias cls="clear"
-
-alias dps="docker ps -a"
-alias dcd="docker compose down"
-alias dcu="COMPOSE_BAKE=true docker compose up"
-alias dcud="COMPOSE_BAKE=true docker compose up -d"
-alias dcl="docker compose logs"
-
-alias dr="dotnet run"
-
-alias src="source ~/.zshrc"
-
-alias wise="cd ~/code/work/wise/"
-alias notes="cd ~/notes && nvim"
-alias dotfiles="cd ~/dotfiles"
-
-alias conf="nv ~/.zshrc"
-
-alias kc="kubectl"
-alias ks="k9s"
-
-export DOTNET_ROOT=$HOME/.dotnet
-export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
-export DOTNET_USE_POLLING_FILE_WATCHER=1
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-DISABLE_AUTO_TITLE="true"
-function set-title() {
-  echo -en "\e]2;$@\a"
-}
+export PATH="$HOME/.scripts:$PATH"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# rust
+. "$HOME/.cargo/env"
+
+# go
+export PATH=$PATH:/usr/local/go/bin
+
+# dotnet
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+
+# File system
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
+alias ff="fzf --preview 'batcat --style=numbers --color=always {}'"
+alias fd='fdfind'
+
+alias lg="lazygit"
+alias ks="k9s"
+
+alias t=tmux
+alias twise="tmux attach -t wise"
+
+alias nv="nvim"
+alias cls="clear"
+
+alias dps="docker ps -a"
+alias dcd="docker compose down"
+alias dcu="docker compose up"
+alias dcl="docker compose logs"
+
+alias wise="cd ~/code/work/wise"
+
+alias src="source ~/.zshrc"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export PATH="$HOME/.local/bin:$PATH"
+
 # bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
-export PATH="$PATH:$HOME/.netcoredbg"
-
-# Go
-export GOPATH=$HOME/.go
-export PATH=$GOPATH/bin:$PATH
-
-# sqlcmd
-export PATH="$PATH:/opt/mssql-tools18/bin"
-
-# Matomo docker
-alias matomo="docker compose -f compose.matomo.yaml"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -s "/home/glensorbo/.bun/_bun" ] && source "/home/glensorbo/.bun/_bun"
