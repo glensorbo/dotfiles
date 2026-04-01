@@ -23,7 +23,6 @@ return {
 			'oxlint',
 			'oxfmt',
 			'marksman',
-			'kulala-fmt',
 		},
 	},
 }
