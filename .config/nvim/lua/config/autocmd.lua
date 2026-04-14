@@ -23,6 +23,16 @@ vim.api.nvim_create_autocmd('BufEnter', {
 	end,
 })
 
+vim.api.nvim_create_autocmd('BufWritePre', {
+	desc = 'Remove Windows line endings (^M) on save',
+	group = vim.api.nvim_create_augroup('FixLineEndings', { clear = true }),
+	callback = function()
+		local view = vim.fn.winsaveview()
+		vim.cmd([[keeppatterns %s/\r//e]])
+		vim.fn.winrestview(view)
+	end,
+})
+
 vim.api.nvim_create_autocmd('TextYankPost', {
 	desc = 'Highlight when yanking (copying) text',
 	group = vim.api.nvim_create_augroup(
