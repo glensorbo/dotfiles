@@ -33,6 +33,42 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 	end,
 })
 
+local function fold_imports(bufnr)
+	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+	local last = 0
+	local depth = 0
+
+	for i, line in ipairs(lines) do
+		if depth > 0 then
+			last = i
+			depth = depth + select(2, line:gsub('{', '')) - select(2, line:gsub('}', ''))
+			depth = math.max(0, depth)
+		elseif line:match('^import ') then
+			last = i
+			depth = depth + select(2, line:gsub('{', '')) - select(2, line:gsub('}', ''))
+		else
+			if last > 0 then
+				break
+			end
+		end
+	end
+
+	if last > 1 then
+		vim.api.nvim_buf_call(bufnr, function()
+			vim.wo.foldmethod = 'manual'
+			vim.cmd(string.format('1,%dfold', last))
+		end)
+	end
+end
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+	group = vim.api.nvim_create_augroup('FoldImports', { clear = true }),
+	pattern = { '*.ts', '*.tsx', '*.js', '*.jsx', '*.mjs' },
+	callback = function(event)
+		fold_imports(event.buf)
+	end,
+})
+
 vim.api.nvim_create_autocmd('TextYankPost', {
 	desc = 'Highlight when yanking (copying) text',
 	group = vim.api.nvim_create_augroup(
