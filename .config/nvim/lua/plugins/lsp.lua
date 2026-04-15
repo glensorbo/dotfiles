@@ -1,3 +1,9 @@
+-- Add .git as a fallback root marker so oxlint finds the monorepo root when
+-- opened from a subdirectory that has no .oxlintrc.json of its own.
+vim.lsp.config("oxlint", {
+	root_markers = { ".oxlintrc.json", "oxlint.config.ts", ".git" },
+})
+
 return {
 	-- https://github.com/folke/lazydev.nvim
 	{
