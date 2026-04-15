@@ -33,6 +33,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 	end,
 })
 
+-- Fold imports autocmd
 local function fold_imports(bufnr)
 	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 	local last = 0
@@ -41,11 +42,15 @@ local function fold_imports(bufnr)
 	for i, line in ipairs(lines) do
 		if depth > 0 then
 			last = i
-			depth = depth + select(2, line:gsub('{', '')) - select(2, line:gsub('}', ''))
+			depth = depth
+				+ select(2, line:gsub('{', ''))
+				- select(2, line:gsub('}', ''))
 			depth = math.max(0, depth)
 		elseif line:match('^import ') then
 			last = i
-			depth = depth + select(2, line:gsub('{', '')) - select(2, line:gsub('}', ''))
+			depth = depth
+				+ select(2, line:gsub('{', ''))
+				- select(2, line:gsub('}', ''))
 		else
 			if last > 0 then
 				break
