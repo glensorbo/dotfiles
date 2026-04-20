@@ -1,13 +1,13 @@
 -- https://github.com/MeanderingProgrammer/render-markdown.nvim
 return {
-	"MeanderingProgrammer/render-markdown.nvim",
+	'MeanderingProgrammer/render-markdown.nvim',
 	dependencies = {
-		"nvim-treesitter/nvim-treesitter",
-		"nvim-tree/nvim-web-devicons",
+		-- "nvim-treesitter/nvim-treesitter",
+		'nvim-tree/nvim-web-devicons',
 	},
-	ft = { "markdown" },
+	ft = { 'markdown' },
 	opts = {
-		render_modes = { "n", "c", "t" },
+		render_modes = { 'n', 'c', 't' },
 		heading = {
 			enabled = true,
 			sign = false,
@@ -15,7 +15,7 @@ return {
 		code = {
 			enabled = true,
 			sign = false,
-			style = "full",
+			style = 'full',
 		},
 		bullet = {
 			enabled = true,
