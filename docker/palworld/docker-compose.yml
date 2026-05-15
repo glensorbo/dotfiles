@@ -1,0 +1,61 @@
+# Palworld Dedicated Server
+# Image: https://github.com/thijsvanloef/palworld-server-docker
+#
+# Deployment notes (Coolify):
+# - All game data (saves, backups, server files) live in the `palworld_data` named volume.
+# - PalWorldSettings.ini is a Coolify persisted storage bind mount — edit it directly
+#   in the Coolify UI under Persistent Storage. The path inside the container is:
+#   /palworld/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+# - Ports are mapped directly (bypass Traefik) because Palworld uses UDP.
+# - Set SERVER_PASSWORD and ADMIN_PASSWORD as environment variables in the Coolify UI.
+# - DISABLE_GENERATE_SETTINGS=true means the server reads PalWorldSettings.ini as-is;
+#   game settings must be edited in the file rather than via environment variables.
+
+services:
+  palworld:
+    image: thijsvanloef/palworld-server-docker:latest
+    restart: unless-stopped
+    stop_grace_period: 30s
+    ports:
+      - "8211:8211/udp"
+      - "27015:27015/udp"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: ${TZ:-Europe/Oslo}
+      PORT: 8211
+      QUERY_PORT: 27015
+      PLAYERS: ${PLAYERS:-16}
+      SERVER_NAME: ${SERVER_NAME:-Palworld Server}
+      SERVER_PASSWORD: ${SERVER_PASSWORD:?}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?}
+      MULTITHREADING: true
+      UPDATE_ON_BOOT: true
+      RCON_ENABLED: true
+      RCON_PORT: 25575
+      REST_API_ENABLED: true
+      REST_API_PORT: 8212
+      COMMUNITY: false
+      # Config file is managed as a Coolify persisted storage file — do not auto-generate
+      DISABLE_GENERATE_SETTINGS: true
+      DISABLE_GENERATE_ENGINE: true
+      # Backups
+      BACKUP_ENABLED: true
+      BACKUP_CRON_EXPRESSION: "0 */6 * * *"
+      DELETE_OLD_BACKUPS: true
+      OLD_BACKUP_DAYS: 7
+      # Optional: set DISCORD_WEBHOOK_URL in Coolify UI to enable notifications
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+    volumes:
+      # All game data (server files, saves, backups) in a named volume
+      - palworld_data:/palworld/
+      # PalWorldSettings.ini — Coolify persisted storage (bind mount).
+      # Add this in the Coolify UI under Persistent Storage:
+      #   Source (host): <coolify-data-dir>/palworld/PalWorldSettings.ini
+      #   Destination:   /palworld/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+      - type: bind
+        source: ./PalWorldSettings.ini
+        target: /palworld/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+
+volumes:
+  palworld_data:
