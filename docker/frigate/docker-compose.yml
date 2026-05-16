@@ -42,6 +42,10 @@ services:
     environment:
       TZ: ${TZ:-Europe/Oslo}
       FRIGATE_RTSP_PASSWORD: ${FRIGATE_RTSP_PASSWORD:?}
+      # Reolink PoE Doorbell credentials (referenced as {FRIGATE_*} in config.yml)
+      FRIGATE_DOORBELL_IP: ${FRIGATE_DOORBELL_IP:?}
+      FRIGATE_DOORBELL_USER: ${FRIGATE_DOORBELL_USER:?}
+      FRIGATE_DOORBELL_PASSWORD: ${FRIGATE_DOORBELL_PASSWORD:?}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       # Main config file — managed as Coolify persisted storage (see deployment notes above)

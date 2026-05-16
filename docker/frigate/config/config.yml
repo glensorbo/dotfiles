@@ -115,13 +115,26 @@ birdseye:
 # view and low-latency restreaming. See https://github.com/AlexxIT/go2rtc
 # ---------------------------------------------------------------------------
 go2rtc:
-  streams: {}
-  # Example:
-  # streams:
-  #   front_door:
-  #     - rtsp://user:pass@192.168.1.10:554/stream1
-  #   driveway:
-  #     - rtsp://user:pass@192.168.1.11:554/stream1
+  streams:
+    # Reolink PoE Doorbell — main stream (high-res, used for recording)
+    # http-flv is the most reliable protocol for Reolink cameras.
+    # The secondary `rtsp:` entry (without `ffmpeg:` prefix) is required for
+    # two-way talk; go2rtc uses it to open the back-channel audio stream.
+    doorbell:
+      - "ffmpeg:http://{FRIGATE_DOORBELL_IP}/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_DOORBELL_USER}&password={FRIGATE_DOORBELL_PASSWORD}#video=copy#audio=copy#audio=opus"
+      - "rtsp://{FRIGATE_DOORBELL_USER}:{FRIGATE_DOORBELL_PASSWORD}@{FRIGATE_DOORBELL_IP}/Preview_01_sub"
+
+    # Sub-stream (low-res, used for detect — saves GPU/CPU on object detection)
+    doorbell_sub:
+      - "ffmpeg:http://{FRIGATE_DOORBELL_IP}/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_DOORBELL_USER}&password={FRIGATE_DOORBELL_PASSWORD}#video=copy#audio=opus"
+      - "rtsp://{FRIGATE_DOORBELL_USER}:{FRIGATE_DOORBELL_PASSWORD}@{FRIGATE_DOORBELL_IP}/Preview_01_sub"
+
+  # WebRTC candidates — required for low-latency two-way talk on the local network.
+  # Set to the IP of the machine running Frigate (replace 192.168.x.x).
+  webrtc:
+    candidates:
+      - 192.168.x.x:8555  # ← replace with your Frigate host IP
+      - stun:8555
 
 # ---------------------------------------------------------------------------
 # MQTT (optional — required for Home Assistant integration)
@@ -138,43 +151,70 @@ go2rtc:
 
 # ---------------------------------------------------------------------------
 # Cameras
-# Add one block per camera. The example below shows the minimal required keys.
-# Duplicate and adjust for each camera; remove the example before going live.
 # Full camera reference: https://docs.frigate.video/configuration/cameras
 # ---------------------------------------------------------------------------
 cameras:
-  # EXAMPLE — replace with your actual cameras
-  example_camera:
-    enabled: false  # set to true once you fill in the real RTSP URL
+  # Reolink PoE Doorbell
+  # Camera settings to configure in the Reolink app / web UI before deploying:
+  #   - Video codec:      H.264 (avoid H.264+ / smart codec — strips keyframes)
+  #   - Audio codec:      AAC
+  #   - Interframe Space: 1x (matches i-frame interval to frame rate)
+  #   - Fluency:          "On, fluency first" (enables CBR / constant bitrate)
+  #   - HTTP:             Enable in Advanced Network settings (required for http-flv)
+  #
+  # Environment variables referenced here (set all in the Coolify UI):
+  #   FRIGATE_DOORBELL_IP        — camera IP address, e.g. 192.168.1.50
+  #   FRIGATE_DOORBELL_USER      — camera username
+  #   FRIGATE_DOORBELL_PASSWORD  — camera password
+  doorbell:
     ffmpeg:
+      # Frigate reads both streams from the go2rtc restream (localhost:8554).
+      # The main stream is used for recording; the sub-stream drives detection.
       inputs:
-        - path: rtsp://user:pass@192.168.1.x:554/stream    # ← change this
-          # Use `detect` for the lower-res sub-stream and `record` for the
-          # full-res main stream if your camera supports dual streams.
+        - path: rtsp://127.0.0.1:8554/doorbell
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/doorbell_sub
+          input_args: preset-rtsp-restream
           roles:
             - detect
-            - record
-      # Override hwaccel preset here if this camera is H.265:
-      # hwaccel_args: preset-nvidia-h265
+      output_args:
+        record: preset-record-generic-audio-copy  # preserve AAC audio in recordings
+
     detect:
       enabled: true
-      width: 1280
-      height: 720
-      fps: 5
+      fps: 10
+      # Resolution is auto-detected from the sub-stream; set explicitly if needed.
+      # width: 896
+      # height: 672
+
     objects:
       track:
         - person
+        - package   # delivery detection
         - car
-        - truck
-        - motorcycle
-        - bicycle
-        - dog
-        - cat
-    record:
-      enabled: true
-    snapshots:
-      enabled: true
-    # Per-camera GenAI object descriptions (inherits global genai config)
-    objects:
       genai:
         enabled: true
+        # Tailored prompt for a doorbell context
+        prompt: >
+          Analyze the {label} captured by the {camera} doorbell camera.
+          Focus on what the {label} is doing and their likely intent
+          (e.g. approaching the door, leaving a package, walking past).
+        object_prompts:
+          person: >
+            Describe what this person is doing at the front door.
+            Are they ringing the bell, leaving a package, or just passing by?
+            Note any items they are carrying.
+
+    record:
+      enabled: true
+
+    snapshots:
+      enabled: true
+
+    # Allow live two-way talk from the Frigate UI (uses WebRTC back-channel)
+    live:
+      streams:
+        Main: doorbell
+        Sub: doorbell_sub
