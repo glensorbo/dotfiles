@@ -42,7 +42,7 @@ semantic_search:
   enabled: true
   model: jinav1
   model_size: large
-  device: 0  # target GPU 0
+  device: "cuda:0"  # target GPU 0
 
 # ---------------------------------------------------------------------------
 # Face recognition (ArcFace large model — GPU-accelerated on device 0)
@@ -52,7 +52,7 @@ semantic_search:
 face_recognition:
   enabled: true
   model_size: large
-  device: 0  # target GPU 0
+  device: "cuda:0"  # target GPU 0
   recognition_threshold: 0.9
   unknown_score: 0.8
   blur_confidence_filter: true
@@ -63,7 +63,7 @@ face_recognition:
 # ---------------------------------------------------------------------------
 lpr:
   enabled: true
-  device: 1  # target GPU 1
+  device: "cuda:1"  # target GPU 1
   model_size: large
 
 # ---------------------------------------------------------------------------
@@ -76,7 +76,6 @@ lpr:
 #   ollama pull minicpm-v
 # ---------------------------------------------------------------------------
 genai:
-  enabled: true
   provider: ollama
   base_url: http://powerhouse.local.lan:11434
   model: llava  # change to whichever vision model you have pulled in Ollama
@@ -86,12 +85,15 @@ genai:
 # ---------------------------------------------------------------------------
 record:
   enabled: true
-  retain:
-    days: 7
-    mode: motion   # only keep segments with motion (saves disk space)
-  events:
+  motion:
+    days: 7    # keep segments that contain motion for 7 days
+  alerts:
     retain:
-      default: 14  # days to keep event clips
+      days: 14
+      mode: active_objects
+  detections:
+    retain:
+      days: 14
       mode: active_objects
 
 # ---------------------------------------------------------------------------
@@ -138,10 +140,10 @@ go2rtc:
 
 # ---------------------------------------------------------------------------
 # MQTT (optional — required for Home Assistant integration)
-# Uncomment and fill in if you have an MQTT broker.
+# Set enabled: true and fill in host/credentials if you have an MQTT broker.
 # ---------------------------------------------------------------------------
-# mqtt:
-#   enabled: true
+mqtt:
+  enabled: false
 #   host: mqtt.local.lan
 #   port: 1883
 #   user: frigate
