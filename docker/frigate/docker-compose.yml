@@ -1,0 +1,57 @@
+# Frigate NVR
+# Image: https://github.com/blakeblackshear/frigate
+#
+# Deployment notes (Coolify):
+# - Uses the `tensorrt` image tag for dual NVIDIA GPU support (object detection + enrichments).
+# - NVIDIA Container Toolkit must be installed on the host before deploying.
+# - The config file (config/config.yml) is a Coolify persisted storage bind mount — edit it
+#   directly in the Coolify UI under Persistent Storage:
+#     Source (host): <repo>/docker/frigate/config/config.yml
+#     Destination:   /config/config.yml
+# - Recorded video, clips, and exports are written to the host at /mnt/storage/frigate.
+#   Ensure this path exists on the host and is writable by the container (uid 0 / root).
+# - A tmpfs mount is used for /tmp/cache to avoid wearing out the disk with short-lived segments.
+# - shm_size is set to 256m — increase if running many high-resolution cameras
+#   (formula: width * height * 1.5 * 20 / 1048576 per camera, plus ~40 MB for logs).
+# - Port 8971 is the main authenticated UI; expose it through Coolify/Traefik as normal.
+# - Ports 8554 (RTSP) and 8555 (WebRTC) are mapped directly — Traefik cannot proxy these.
+# - Set FRIGATE_RTSP_PASSWORD in the Coolify UI (required secret).
+
+services:
+  frigate:
+    image: ghcr.io/blakeblackshear/frigate:0.17.1-tensorrt
+    container_name: frigate
+    restart: unless-stopped
+    stop_grace_period: 30s
+    # NVIDIA GPU passthrough — requires Docker 19.03+ and NVIDIA Container Toolkit on the host.
+    # If Coolify does not honour the deploy block, add `runtime: nvidia` here instead.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, compute, video, utility]
+    shm_size: "256m"
+    ports:
+      - "8971:8971"   # Authenticated UI / API (reverse-proxy this via Coolify/Traefik)
+      - "5000:5000"   # Unauthenticated internal API — restrict access to the Docker network only
+      - "8554:8554"   # RTSP restreaming (direct, bypasses Traefik)
+      - "8555:8555/tcp"  # WebRTC over TCP
+      - "8555:8555/udp"  # WebRTC over UDP
+    environment:
+      TZ: ${TZ:-Europe/Oslo}
+      FRIGATE_RTSP_PASSWORD: ${FRIGATE_RTSP_PASSWORD:?}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # Main config file — managed as Coolify persisted storage (see deployment notes above)
+      - type: bind
+        source: ./config/config.yml
+        target: /config/config.yml
+      # All recorded video, clips, and exports
+      - /mnt/storage/frigate:/media/frigate
+      # In-memory cache for active recording segments (avoids disk I/O for short-lived files)
+      - type: tmpfs
+        target: /tmp/cache
+        tmpfs:
+          size: 1073741824  # 1 GB
