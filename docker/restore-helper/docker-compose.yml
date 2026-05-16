@@ -1,0 +1,32 @@
+# Ubuntu Restore Helper
+# Image: https://hub.docker.com/_/ubuntu
+#
+# Deployment notes (Coolify):
+# - Mount the target named volume under Persistent Storage in the Coolify UI:
+#     Source (volume): <your-volume-name>
+#     Destination:     /data
+# - Copy files into the container: docker cp <file> restore-helper:/staging/
+# - Exec in to restore:            docker exec -it restore-helper bash
+# - The container does nothing but sleep — restart it when you need it.
+
+services:
+  restore-helper:
+    image: ubuntu:latest
+    container_name: restore-helper
+    restart: unless-stopped
+    stop_grace_period: 10s
+    command: ["sleep", "infinity"]
+    volumes:
+      # Attach the volume you want to restore into at /data.
+      # In Coolify, add a Persistent Storage bind mount:
+      #   Source (volume): <your-existing-named-volume>
+      #   Destination:     /data
+      - restore_data:/data
+      # Staging area — copy backup files here before extracting
+      - restore_staging:/staging
+
+volumes:
+  restore_data:
+    external: true
+    name: ${RESTORE_VOLUME:-restore_data}
+  restore_staging:
