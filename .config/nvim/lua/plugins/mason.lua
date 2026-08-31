@@ -19,7 +19,7 @@ return {
 		ensure_installed = {
 			'lua_ls',
 			'stylua',
-			'tsgo',
+			'tsc',
 			'oxlint',
 			'oxfmt',
 			'marksman',
